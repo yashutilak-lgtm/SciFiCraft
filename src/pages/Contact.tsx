@@ -57,7 +57,7 @@ export function Contact() {
                 <Phone className="mt-0.5 h-5 w-5 shrink-0 text-neon-cyan" aria-hidden />
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted">Phone</p>
-                  <p className="mt-1 text-foreground">+91 98765 43210</p>
+                  <p className="mt-1 text-foreground">+91 80722 68414 </p>
                 </div>
               </li>
               <li className="flex gap-3">
