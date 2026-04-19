@@ -1,15 +1,18 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, ShoppingCart, User, X } from 'lucide-react'
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
 import { useQuote } from '../../context/QuoteContext'
 
 const nav = [
   { to: '/', label: 'Home' },
+  { to: '/products', label: 'Products' },
   { to: '/services', label: 'Services' },
-  { to: '/portfolio', label: 'Portfolio' },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/pricing', label: 'Pricing' },
+  { to: '/faq', label: 'FAQ' },
+  { to: '/blog', label: 'Blog' },
 ]
 
 function desktopLinkClass({ isActive }: { isActive: boolean }) {
@@ -23,6 +26,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   const { openQuote } = useQuote()
+  const { itemCount } = useCart()
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-bg/75 backdrop-blur-xl">
@@ -53,10 +57,23 @@ export function Navbar() {
             Instant quote
           </button>
           <NavLink
-            to="/contact"
-            className="focus-ring rounded-full bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple px-4 py-2 text-sm font-semibold text-bg shadow-lg shadow-neon-purple/20 transition hover:brightness-110"
+            to="/cart"
+            className="focus-ring relative inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-2 text-sm font-semibold text-foreground transition hover:border-neon-cyan/40"
           >
-            Get a quote
+            <ShoppingCart className="h-4 w-4" aria-hidden />
+            Cart
+            {itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-neon-cyan px-1 text-[11px] font-bold text-bg">
+                {itemCount}
+              </span>
+            )}
+          </NavLink>
+          <NavLink
+            to="/account"
+            className="focus-ring inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple px-4 py-2 text-sm font-semibold text-bg shadow-lg shadow-neon-purple/20 transition hover:brightness-110"
+          >
+            <User className="h-4 w-4" aria-hidden />
+            Account
           </NavLink>
         </div>
 
@@ -110,11 +127,18 @@ export function Navbar() {
                 Instant quote
               </button>
               <NavLink
-                to="/contact"
+                to="/cart"
+                onClick={() => setOpen(false)}
+                className="rounded-full border border-border bg-bg/20 px-4 py-2.5 text-center text-sm font-semibold text-foreground"
+              >
+                Cart {itemCount > 0 ? `(${itemCount})` : ''}
+              </NavLink>
+              <NavLink
+                to="/account"
                 onClick={() => setOpen(false)}
                 className="rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple px-4 py-2.5 text-center text-sm font-semibold text-bg"
               >
-                Get a quote
+                Account
               </NavLink>
             </div>
           </motion.div>

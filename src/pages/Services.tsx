@@ -10,7 +10,9 @@ import {
   Timer,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { ServiceCustomizer } from '../components/commerce/ServiceCustomizer'
 import { MotionSection } from '../components/ui/MotionSection'
+import { useQuote } from '../context/QuoteContext'
 import { useSeo } from '../hooks/useSeo'
 
 const items = [
@@ -45,6 +47,7 @@ export function Services() {
     'Services | Nirmaan3D — Rapid Prototyping & 3D Printing',
     'Rapid prototyping, custom 3D printing, CAD design, and batch production for teams in India.',
   )
+  const { openQuote } = useQuote()
 
   return (
     <>
@@ -53,27 +56,32 @@ export function Services() {
         <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-neon-cyan">Services</p>
           <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Engineering-first <span className="text-gradient">additive</span>
+            Engineering-first <span className="text-gradient">D2C printing</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-muted">
-            Every engagement starts with how your part will be used — not just how it will be printed.
+            Configure, estimate, and order in minutes — then we review for strength, tolerance, and finish before we print.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
-              to="/contact"
-              className="inline-flex rounded-full bg-gradient-to-r from-neon-cyan to-neon-purple px-7 py-3 text-sm font-semibold text-bg shadow-lg"
+              to="/products"
+              className="focus-ring inline-flex rounded-full bg-gradient-to-r from-neon-cyan to-neon-blue px-7 py-3 text-sm font-semibold text-bg shadow-lg transition hover:brightness-110"
             >
-              Request a quote
+              Order now
             </Link>
-            <Link
-              to="/portfolio"
-              className="inline-flex rounded-full border border-border px-7 py-3 text-sm font-semibold text-foreground hover:border-neon-cyan/40"
+            <button
+              type="button"
+              onClick={openQuote}
+              className="focus-ring inline-flex rounded-full border border-border bg-surface/70 px-7 py-3 text-sm font-semibold text-foreground transition hover:border-neon-cyan/40 hover:shadow-glow-cyan"
             >
-              See work
-            </Link>
+              Get quote (upload)
+            </button>
           </div>
         </div>
       </section>
+
+      <MotionSection className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+        <ServiceCustomizer />
+      </MotionSection>
 
       <MotionSection className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-2">
@@ -125,6 +133,78 @@ export function Services() {
                 <b.icon className="h-8 w-8 text-neon-blue" aria-hidden />
                 <h3 className="mt-4 font-display text-lg font-semibold text-foreground">{b.title}</h3>
                 <p className="mt-2 text-sm text-muted">{b.body}</p>
+              </div>
+            ))}
+          </div>
+        </MotionSection>
+      </section>
+
+      <section id="pricing-tiers" className="border-t border-border/70">
+        <MotionSection className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-neon-purple">Pricing tiers</p>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                Prototype → Production → Premium finish
+              </h2>
+              <p className="mt-4 max-w-2xl text-muted">
+                Use the configurator for instant estimates. For large batches, we’ll confirm a volume plan and QC checklist.
+              </p>
+            </div>
+            <Link
+              to="/pricing"
+              className="focus-ring inline-flex items-center gap-2 rounded-full border border-border bg-surface/70 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-neon-cyan/40"
+            >
+              See full pricing
+            </Link>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                title: 'Prototype printing',
+                body: 'Fast iterations for fit, function, and assembly checks.',
+                cta: 'Estimate + add to cart',
+              },
+              {
+                title: 'Production printing',
+                body: 'Bulk orders with repeatability and predictable unit cost.',
+                cta: 'Request bulk quote',
+                highlight: true,
+              },
+              {
+                title: 'Premium finishing',
+                body: 'Client-ready parts with surface treatment options.',
+                cta: 'Add finishing at checkout',
+              },
+            ].map((t) => (
+              <div
+                key={t.title}
+                className={[
+                  'rounded-2xl border p-6',
+                  t.highlight ? 'border-neon-cyan/35 bg-surface/65 shadow-glow-cyan' : 'border-border bg-surface/55',
+                ].join(' ')}
+              >
+                <h3 className="font-display text-lg font-semibold text-foreground">{t.title}</h3>
+                <p className="mt-2 text-sm text-muted">{t.body}</p>
+                <div className="mt-6 flex gap-3">
+                  {t.highlight ? (
+                    <button
+                      type="button"
+                      onClick={openQuote}
+                      className="focus-ring inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-neon-cyan to-neon-blue px-6 py-3 text-sm font-semibold text-bg transition hover:brightness-110"
+                    >
+                      {t.cta}
+                    </button>
+                  ) : (
+                    <Link
+                      to="/cart"
+                      className="focus-ring inline-flex w-full items-center justify-center rounded-full border border-border bg-bg/20 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-neon-cyan/40"
+                    >
+                      {t.cta}
+                    </Link>
+                  )}
+                </div>
               </div>
             ))}
           </div>

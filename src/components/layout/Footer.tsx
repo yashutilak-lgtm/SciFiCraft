@@ -72,23 +72,33 @@ export function Footer() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Explore</p>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
+                <Link to="/products" className="text-muted transition hover:text-foreground">
+                  Products
+                </Link>
+              </li>
+              <li>
                 <Link to="/services" className="text-muted transition hover:text-foreground">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/portfolio" className="text-muted transition hover:text-foreground">
-                  Portfolio
+                <Link to="/gallery" className="text-muted transition hover:text-foreground">
+                  Gallery
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-muted transition hover:text-foreground">
-                  About
+                <Link to="/pricing" className="text-muted transition hover:text-foreground">
+                  Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-muted transition hover:text-foreground">
-                  Contact
+                <Link to="/faq" className="text-muted transition hover:text-foreground">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="text-muted transition hover:text-foreground">
+                  Blog
                 </Link>
               </li>
             </ul>
